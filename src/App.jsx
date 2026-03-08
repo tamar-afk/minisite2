@@ -1331,7 +1331,7 @@ export default function App() {
           {guardrailsCategory === 0 && (
             <motion.div key="workflow" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.3 }} style={{ maxWidth: 600, margin: '0 auto', background: 'white', borderRadius: 14, border: '1px solid var(--border)', padding: '24px 26px', boxShadow: '0 1px 12px rgba(0,0,0,0.03)' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.35 }} style={{ fontFamily: 'Poppins', fontSize: 13, color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>Define automations and agent behavior in one place.</p>
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1, duration: 0.35 }} style={{ fontFamily: 'Poppins', fontSize: 13, color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>Define automations and agent behavior in one place.</motion.p>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: 6 }}>
                   {[
                     { label: 'Trigger', sub: 'Status changes', color: '#579BFC' },
