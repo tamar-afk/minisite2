@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  --primary:       #6C47FF;
+  --primary-tint:  rgba(108, 71, 255, 0.06);
+  --primary-glow:  rgba(108, 71, 255, 0.12);
+  --accent-green:  #00CA72;
+  --accent-amber:  #F5A623;
+  --accent-pink:   #FF5C84;
+  --dark:          #0a0a14;
+  --dark-surface:  #12121f;
+  --dark-border:   rgba(255, 255, 255, 0.06);
+  --light-bg:      #f8f7fc;
+  --near-white:    #fafafa;
+  --white:         #FFFFFF;
+  --text-primary:  #0f0f1a;
+  --text-muted:    #5c5c7a;
+  --text-xmuted:   #8e8ea8;
+  --border:        rgba(0, 0, 0, 0.06);
+  --border-strong: rgba(0, 0, 0, 0.10);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Poppins', system-ui, sans-serif;
+  color: var(--text-primary);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Section background bleeds */
+.section-light {
+  background: linear-gradient(to bottom,
+    #ffffff 0%, #F7F6FF 8%, #F7F6FF 92%, #ffffff 100%);
+}
+
+.pre-dark-bleed {
+  height: 220px;
+  background: linear-gradient(to bottom, var(--light-bg) 0%, rgba(10, 10, 20, 0.4) 40%, var(--dark) 100%);
+  pointer-events: none;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-outer {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 64px;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+/* Knowledge layer SVG dash flow */
+@keyframes dashFlow {
+  to { stroke-dashoffset: -40; }
+}
+
+/* Final CTA particle drift */
+@keyframes drift {
+  0%   { transform: translateY(0) translateX(0); }
+  33%  { transform: translateY(-14px) translateX(8px); }
+  66%  { transform: translateY(-7px) translateX(-10px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+@media (max-width: 768px) {
+  .section-label-mobile-hide { display: none !important; }
+}
