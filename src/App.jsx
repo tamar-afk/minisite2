@@ -76,6 +76,115 @@ function Eyebrow({ children, dark }) {
   )
 }
 
+function GDPRBadge() {
+  return (
+    <div style={{
+      width: 80, height: 80,
+      border: '2px solid #003399',
+      borderRadius: '50%',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      position: 'relative',
+      flexShrink: 0,
+    }}>
+      <div style={{ position: 'absolute', inset: 4, borderRadius: '50%', border: '1px dashed rgba(0,51,153,0.2)' }} />
+      {Array.from({ length: 12 }).map((_, i) => {
+        const angle = (i * 30 - 90) * (Math.PI / 180)
+        const r = 28
+        return (
+          <div key={i} style={{
+            position: 'absolute',
+            left: 40 + r * Math.cos(angle) - 3,
+            top: 40 + r * Math.sin(angle) - 3,
+            fontSize: 6, color: '#003399', lineHeight: 1,
+          }}>★</div>
+        )
+      })}
+      <div style={{ fontSize: 11, fontWeight: 800, color: '#003399', letterSpacing: '0.02em', zIndex: 1 }}>GDPR</div>
+    </div>
+  )
+}
+
+function SOC2Badge() {
+  return (
+    <div style={{
+      width: 80, height: 80,
+      border: '2px solid #1a1a1a',
+      borderRadius: '50%',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0, gap: 1,
+    }}>
+      <div style={{ fontSize: 7, fontWeight: 700, color: '#1a1a1a', letterSpacing: '0.08em', textTransform: 'uppercase' }}>AICPA</div>
+      <div style={{ fontSize: 14, fontWeight: 800, color: '#1a1a1a' }}>SOC 2</div>
+      <div style={{ width: 40, height: 1, background: '#1a1a1a', margin: '1px 0' }} />
+      <div style={{ fontSize: 7, fontWeight: 600, color: '#1a1a1a', letterSpacing: '0.04em' }}>TYPE II</div>
+    </div>
+  )
+}
+
+function ISOBadge() {
+  return (
+    <div style={{
+      width: 80, height: 80,
+      border: '2.5px solid #1a1a1a',
+      borderRadius: '50%',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0, gap: 0, position: 'relative',
+      overflow: 'hidden',
+    }}>
+      <div style={{ fontSize: 6, fontWeight: 700, color: '#1a1a1a', letterSpacing: '0.1em', marginBottom: 1 }}>ISO 27001</div>
+      <div style={{ fontSize: 20, lineHeight: 1 }}>🔒</div>
+      <div style={{ fontSize: 6, fontWeight: 600, color: '#1a1a1a', letterSpacing: '0.06em', marginTop: 1 }}>CERTIFIED</div>
+    </div>
+  )
+}
+
+function HIPAABadge() {
+  return (
+    <div style={{
+      width: 80, height: 80,
+      border: '2px solid #1a1a1a',
+      borderRadius: '50%',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
+      flexShrink: 0, gap: 2,
+      background: 'white',
+    }}>
+      <div style={{ fontSize: 20, lineHeight: 1 }}>⚕</div>
+      <div style={{ fontSize: 11, fontWeight: 800, color: '#1a1a1a', letterSpacing: '0.05em' }}>HIPAA</div>
+    </div>
+  )
+}
+
+function GartnerLogo() {
+  return (
+    <div style={{
+      fontSize: 28, fontWeight: 700,
+      color: '#1a1a1a',
+      letterSpacing: '-0.02em',
+      fontFamily: 'Georgia, serif',
+    }}>
+      Gartner
+    </div>
+  )
+}
+
+function ForresterLogo() {
+  return (
+    <div style={{
+      fontSize: 22, fontWeight: 700,
+      color: '#1a1a1a',
+      letterSpacing: '0.12em',
+      textTransform: 'uppercase',
+      fontFamily: 'Poppins, sans-serif',
+    }}>
+      FORRESTER<span style={{ fontSize: 12, verticalAlign: 'super' }}>®</span>
+    </div>
+  )
+}
+
 function Toggle({ on, toggle }) {
   return (
     <motion.div
@@ -158,7 +267,7 @@ const BOARD_DATA = {
     name: 'Product Roadmap — Q4',
     groups: [
       { name: 'In Progress', color: '#579BFC', items: [
-        { name: 'AI agent builder', owner: 'DW', ownerColor: '#579BFC', status: 'Working on it', date: 'Oct 20' },
+        { name: 'Agent builder', owner: 'DW', ownerColor: '#579BFC', status: 'Working on it', date: 'Oct 20' },
         { name: 'Mobile redesign', owner: 'AL', ownerColor: '#A25DDC', status: 'In review', date: 'Oct 18' },
         { name: 'API v3 release', owner: 'MK', ownerColor: '#00C875', status: 'Working on it', date: 'Oct 25' },
       ]},
@@ -375,7 +484,7 @@ function AgentSurface({ agentName, taskTitle, steps: agentSteps }) {
           <div style={{ width: 52, height: 52, borderRadius: 14, background: 'linear-gradient(135deg, #6C47FF 0%, #A25DDC 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>⚡</div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 16, fontWeight: 700 }}>{agentName}</div>
-            <div style={{ fontSize: 12, color: '#676879' }}>AI Agent · monday work management</div>
+            <div style={{ fontSize: 12, color: '#676879' }}>Agent · monday work management</div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(0,200,117,0.08)', border: '1px solid #00C875', padding: '5px 12px', borderRadius: 100 }}>
             <motion.div animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 6, height: 6, borderRadius: '50%', background: '#00C875' }} />
@@ -582,7 +691,7 @@ function WorkloadHeatmapSurface() {
         </div>
         {people.map((person, pi) => (
           <div key={pi}>
-            {pi === 4 && <div style={{ margin: '10px 0 8px', fontSize: 10, fontWeight: 600, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>AI Agents</div>}
+            {pi === 4 && <div style={{ margin: '10px 0 8px', fontSize: 10, fontWeight: 600, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Agents</div>}
             {pi === 0 && <div style={{ margin: '0 0 8px', fontSize: 10, fontWeight: 600, color: 'var(--text-xmuted)', textTransform: 'uppercase', letterSpacing: '0.07em' }}>Team Members</div>}
             <div style={{ display: 'grid', gridTemplateColumns: '140px repeat(6, 1fr)', gap: 4, marginBottom: 4 }}>
               <div style={{ fontSize: 12, fontWeight: person.type === 'agent' ? 600 : 400, color: person.type === 'agent' ? 'var(--primary)' : 'var(--text-primary)', display: 'flex', alignItems: 'center' }}>{person.name}</div>
@@ -738,7 +847,7 @@ const LEGAL_GROUPS = BOARD_DATA.Legal?.groups ?? [
 ]
 const PRODUCT_GROUPS = BOARD_DATA.Product?.groups ?? [
   { name: 'In Progress', color: '#579BFC', items: [
-    { name: 'AI agent builder', owner: 'DW', ownerColor: '#579BFC', status: 'Working on it', date: 'Oct 20' },
+    { name: 'Agent builder', owner: 'DW', ownerColor: '#579BFC', status: 'Working on it', date: 'Oct 20' },
     { name: 'Mobile redesign', owner: 'AL', ownerColor: '#A25DDC', status: 'In review', date: 'Oct 18' },
     { name: 'API v3 release', owner: 'MK', ownerColor: '#00C875', status: 'Working on it', date: 'Oct 25' },
   ]},
@@ -1064,7 +1173,7 @@ export default function App() {
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9, duration: 0.5 }}
             style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 18, color: 'var(--text-muted)', maxWidth: 480, margin: '24px auto 0', lineHeight: 1.7 }}
-          >You set the direction. AI agents execute across every team, every workflow, every use case.</motion.p>
+          >You set the direction. Agents execute across every team, every workflow, every use case.</motion.p>
 
           <motion.div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginTop: 40 }}>
             <motion.button {...primaryBtn} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 15, color: 'white', background: 'var(--primary)', border: 'none', borderRadius: 12, padding: '14px 28px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(108,71,255,0.25)' }}>Get started free</motion.button>
@@ -1147,17 +1256,17 @@ export default function App() {
       </section>
 
       {/* [08] Platform Statement — 4 pillars */}
-      <section style={{ background: 'white', padding: '88px clamp(32px, 5vw, 64px)', maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+      <section style={{ background: 'white', padding: '88px clamp(16px, 3vw, 40px)', maxWidth: 960, margin: '0 auto', textAlign: 'center' }}>
         <p style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 'clamp(24px, 2.8vw, 34px)', color: 'var(--text-primary)', lineHeight: 1.55, margin: 0, letterSpacing: '-0.01em' }}>
           monday work management is the complete system for AI-powered work execution. Where humans lead — and agents execute.
         </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', alignItems: 'center', marginTop: 28 }}>
+        <div style={{ display: 'flex', flexWrap: 'nowrap', gap: 8, justifyContent: 'center', alignItems: 'center', marginTop: 28 }}>
           {['Specialized agents', 'Human orchestration', 'Complete work platform', 'One shared brain'].map((pill) => (
             <motion.span
               key={pill}
               whileHover={{ scale: 1.02, borderColor: 'rgba(108,71,255,0.25)', color: 'var(--text-primary)', boxShadow: '0 2px 12px rgba(108,71,255,0.08)' }}
               transition={{ duration: 0.2 }}
-              style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 13, color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 100, padding: '10px 18px', backgroundColor: 'white', boxShadow: '0 1px 4px rgba(0,0,0,0.04)', whiteSpace: 'nowrap' }}
+              style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 100, padding: '8px 14px', backgroundColor: 'white', boxShadow: '0 1px 4px rgba(0,0,0,0.04)', whiteSpace: 'nowrap', flexShrink: 0 }}
             >{pill}</motion.span>
           ))}
         </div>
@@ -1168,8 +1277,8 @@ export default function App() {
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '80px clamp(32px, 5vw, 64px) 40px' }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>1 / 4</div>
           <Eyebrow>Specialized Agents</Eyebrow>
-          <h2 style={{ fontFamily: 'Poppins', fontSize: 'clamp(30px, 3.8vw, 48px)', fontWeight: 600, margin: 0, color: 'var(--text-primary)', lineHeight: 1.2, letterSpacing: '-0.02em' }}>Built for every team.</h2>
-          <p style={{ fontFamily: 'Poppins', fontSize: 'clamp(20px, 2.5vw, 28px)', fontWeight: 400, color: 'var(--text-muted)', margin: '8px 0 0', lineHeight: 1.4 }}>Purpose-built for the work they actually do.</p>
+          <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: 0, lineHeight: 1.25, letterSpacing: '-0.015em' }}>Built for every team.</h2>
+          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: '8px 0 0', lineHeight: 1.4 }}>Purpose-built solutions and agents for every department and use case.</p>
         </div>
         <div style={{ position: 'sticky', top: 64, zIndex: 10, background: 'rgba(255,255,255,0.98)', borderBottom: '1px solid var(--border)', padding: '0 clamp(32px, 5vw, 64px)', backdropFilter: 'saturate(1.1) blur(12px)' }}>
           <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', gap: 0 }}>
@@ -1204,7 +1313,7 @@ export default function App() {
                 <DashboardSurface key="pmo" />,
                 <MondayBoardSurface key="legal" boardName="Contract Management" groups={[{ name: 'Pending Review', color: '#FDAB3D', items: [{ name: 'Vendor MSA — Acme Corp', owner: 'SR', ownerColor: '#579BFC', status: 'In review', date: 'Oct 9' }, { name: 'Enterprise SLA draft', owner: 'AL', ownerColor: '#A25DDC', status: 'Working on it', date: 'Oct 11' }, { name: 'NDA — Global Corp', owner: 'MK', ownerColor: '#00C875', status: 'Waiting', date: 'Oct 13' }] }, { name: 'Approved', color: '#00C875', items: [{ name: 'Partner agreement Q3', owner: 'SR', ownerColor: '#579BFC', status: 'Done', date: 'Oct 2' }, { name: 'Q3 renewal — TechCo', owner: 'JL', ownerColor: '#FDAB3D', status: 'Done', date: 'Sep 28' }] }]} />,
                 <AgentSurface key="hr" agentName="HR Onboarding Agent" taskTitle="Onboard Alex Chen — Senior Designer" steps={['Create onboarding board', 'Send welcome email & contracts', 'Assign IT equipment task', 'Schedule manager intro call', 'Notify People team']} />,
-                <MondayBoardSurface key="product" boardName="Product Roadmap — Q4" groups={[{ name: 'In Sprint', color: '#579BFC', items: [{ name: 'AI agent builder', owner: 'DW', ownerColor: '#579BFC', status: 'Working on it', date: 'Oct 20' }, { name: 'Mobile redesign', owner: 'AL', ownerColor: '#A25DDC', status: 'In review', date: 'Oct 18' }, { name: 'API v3 release', owner: 'MK', ownerColor: '#00C875', status: 'Working on it', date: 'Oct 25' }] }, { name: 'Backlog', color: '#C4C4C4', items: [{ name: 'Gantt improvements', owner: 'JL', ownerColor: '#FDAB3D', status: 'Not started', date: 'Nov 5' }, { name: 'Dashboard templates', owner: 'SR', ownerColor: '#579BFC', status: 'Not started', date: 'Nov 12' }] }]} />,
+                <MondayBoardSurface key="product" boardName="Product Roadmap — Q4" groups={[{ name: 'In Sprint', color: '#579BFC', items: [{ name: 'Agent builder', owner: 'DW', ownerColor: '#579BFC', status: 'Working on it', date: 'Oct 20' }, { name: 'Mobile redesign', owner: 'AL', ownerColor: '#A25DDC', status: 'In review', date: 'Oct 18' }, { name: 'API v3 release', owner: 'MK', ownerColor: '#00C875', status: 'Working on it', date: 'Oct 25' }] }, { name: 'Backlog', color: '#C4C4C4', items: [{ name: 'Gantt improvements', owner: 'JL', ownerColor: '#FDAB3D', status: 'Not started', date: 'Nov 5' }, { name: 'Dashboard templates', owner: 'SR', ownerColor: '#579BFC', status: 'Not started', date: 'Nov 12' }] }]} />,
                 <AgentSurface key="marketing" agentName="Campaign Agent" taskTitle="Build Q3 campaign plan from brief" steps={['Parse campaign brief', 'Generate task breakdown', 'Assign owners & deadlines', 'Create campaign board', 'Notify stakeholders']} />,
                 <WorkflowSurface key="it" />,
                 <WorkflowSurface key="ops" />,
@@ -1236,8 +1345,8 @@ export default function App() {
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>2 / 4</div>
           <Eyebrow>complete work platform</Eyebrow>
-          <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>Every step of work, in one place.</h2>
-          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: 0 }}>From the first goal to the final report.</p>
+          <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>Every step of work, powered by AI.</h2>
+          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: 0 }}>From planning to execution to reporting, all in one place.</p>
         </div>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(32px, 5vw, 64px)', display: 'flex', background: 'white', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {/* Left panel — steps list, compact */}
@@ -1301,7 +1410,7 @@ export default function App() {
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>4 / 4</div>
           <Eyebrow>HUMAN ORCHESTRATION</Eyebrow>
-          <h2 style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 'clamp(24px, 2.6vw, 36px)', color: 'var(--text-primary)', margin: '0 0 6px', lineHeight: 1.28, letterSpacing: '-0.01em' }}>You set the guardrails.</h2>
+          <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 6px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>You set the guardrails.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 15, color: 'var(--text-muted)', margin: 0 }}>Tell agents what to do — and keep them in their lane.</p>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginBottom: 36 }}>
@@ -1432,31 +1541,121 @@ export default function App() {
         </div>
       </section>
 
-      {/* Pre-dark bleed */}
-      <div className="pre-dark-bleed" />
-
-      {/* [10] Proof — the outcome that backs the story */}
-      <section style={{ background: 'var(--dark)', padding: '100px clamp(32px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 820, margin: '0 auto' }}>
-          <div ref={proof50Ref} style={{ textAlign: 'center' }}>
-            <div style={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: 'clamp(80px, 12vw, 112px)', color: 'white', lineHeight: 1, letterSpacing: '-0.03em' }}>{count50}%</div>
-            <div style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'rgba(255,255,255,0.45)', marginTop: 8 }}>faster project delivery</div>
+      {/* [10] Enterprise & Proof — white, three cards */}
+      <section style={{ background: 'white', padding: '100px 0' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 48, flexWrap: 'wrap', gap: 24 }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-muted)', marginBottom: 16, fontFamily: 'Poppins' }}>
+                Enterprise-ready AI work platform
+              </div>
+              <h2 style={{ fontFamily: 'Poppins', fontSize: 'clamp(36px, 4vw, 56px)', fontWeight: 800, lineHeight: 1.1, margin: 0, color: 'var(--text-primary)' }}>
+                Trusted by enterprises.<br />
+                Recognized by industry leaders.
+              </h2>
+            </div>
+            <motion.a
+              href="#"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '12px 24px', borderRadius: 100,
+                border: '1.5px solid var(--text-primary)',
+                fontSize: 14, fontWeight: 500, color: 'var(--text-primary)',
+                textDecoration: 'none', whiteSpace: 'nowrap', marginTop: 8,
+                flexShrink: 0, fontFamily: 'Poppins',
+              }}
+            >
+              Contact sales <span>→</span>
+            </motion.a>
           </div>
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: EASE.out }} viewport={{ once: true, amount: 0.2 }} style={{ background: 'white', borderRadius: 20, padding: 44, marginTop: 56, position: 'relative', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid var(--border)' }}>
-            <div style={{ position: 'absolute', top: 24, left: 32, fontSize: 72, fontWeight: 800, lineHeight: 1, color: 'var(--primary)', opacity: 0.35 }}>"</div>
-            <p style={{ fontFamily: 'Poppins', fontSize: 19, fontWeight: 400, lineHeight: 1.65, marginTop: 36, color: 'var(--text-primary)' }}>monday's AI helped us cut our project planning time in half. What used to take days now takes minutes.</p>
-            <div style={{ marginTop: 24, borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-              <strong style={{ fontFamily: 'Poppins', fontWeight: 600 }}>Sarah Luxemberg</strong>
-              <span style={{ color: 'var(--text-muted)', marginLeft: 8, fontFamily: 'Poppins', fontWeight: 400 }}>· Operations Director, VML</span>
+
+          <motion.div
+            ref={proof50Ref}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ display: 'flex', alignItems: 'stretch', gap: 24, marginBottom: 48, flexWrap: 'wrap' }}
+          >
+            <div style={{ flex: 1, minWidth: 280, background: 'white', borderRadius: 20, padding: 44, position: 'relative', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid var(--border)' }}>
+              <div style={{ position: 'absolute', top: 24, left: 32, fontSize: 72, fontWeight: 800, lineHeight: 1, color: 'var(--primary)', opacity: 0.35, fontFamily: 'Poppins' }}>"</div>
+              <p style={{ fontFamily: 'Poppins', fontSize: 19, fontWeight: 400, lineHeight: 1.65, marginTop: 36, color: 'var(--text-primary)' }}>monday's AI helped us cut our project planning time in half. What used to take days now takes minutes.</p>
+              <div style={{ marginTop: 24, borderTop: '1px solid var(--border)', paddingTop: 20 }}>
+                <strong style={{ fontFamily: 'Poppins', fontWeight: 600 }}>Sarah Luxemberg</strong>
+                <span style={{ color: 'var(--text-muted)', marginLeft: 8, fontFamily: 'Poppins', fontWeight: 400 }}>· Operations Director, VML</span>
+              </div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: '0 0 200px', minWidth: 160 }}>
+              <div style={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: 'clamp(64px, 8vw, 96px)', color: 'var(--text-primary)', lineHeight: 1, letterSpacing: '-0.03em' }}>{count50}%</div>
+              <div style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 15, color: 'var(--text-muted)', marginTop: 8, textAlign: 'center' }}>faster project delivery</div>
             </div>
           </motion.div>
-          <p style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', marginTop: 64, marginBottom: 24 }}>TRUSTED BY ENTERPRISES. RECOGNIZED BY INDUSTRY LEADERS.</p>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={sectionVariants} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-            <motion.div variants={itemVariants} style={{ display: 'flex', flexWrap: 'wrap', gap: 48, justifyContent: 'center', opacity: 0.4 }}>{['Uber', 'Coca-Cola', 'Canva', 'Lionsgate', 'Universal', 'Unilever'].map((n) => <span key={n} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: 'white' }}>{n}</span>)}</motion.div>
-            <motion.div variants={itemVariants} style={{ display: 'flex', flexWrap: 'wrap', gap: 48, justifyContent: 'center', opacity: 0.4 }}>{['Gartner', 'Forrester', 'G2', 'Forbes'].map((n) => <span key={n} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: 'white' }}>{n}</span>)}</motion.div>
-          </motion.div>
+
+          <div style={{ display: 'flex', gap: 16, alignItems: 'stretch', flexWrap: 'wrap' }}>
+            {/* Card 1 — Enterprise-grade security */}
+            <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 16, padding: '32px 32px', flex: '0 0 48%', minWidth: 280 }}>
+              <h3 style={{ fontFamily: 'Poppins', fontSize: 22, fontWeight: 700, marginBottom: 16, color: 'var(--text-primary)' }}>
+                Enterprise-grade security
+              </h3>
+              <p style={{ fontFamily: 'Poppins', fontSize: 14, fontWeight: 400, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 24 }}>
+                Enterprise-grade AI infrastructure with built-in protection and security, data privacy, governance, permissions, and compliance.
+              </p>
+              <a href="#" style={{ fontFamily: 'Poppins', fontSize: 13, fontWeight: 500, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 32, textDecoration: 'none' }}>
+                Explore our Trust Center <span>→</span>
+              </a>
+              <div style={{ display: 'flex', gap: 16, alignItems: 'center', flexWrap: 'wrap' }}>
+                <GDPRBadge />
+                <SOC2Badge />
+                <ISOBadge />
+                <HIPAABadge />
+              </div>
+            </div>
+
+            {/* Card 2 — Gartner */}
+            <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 16, padding: '32px 32px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 240 }}>
+              <div>
+                <div style={{ fontFamily: 'Poppins', fontSize: 14, fontWeight: 400, color: 'var(--text-muted)', marginBottom: 8 }}>
+                  The <strong style={{ color: 'var(--text-primary)' }}>only</strong> Leader in
+                </div>
+                <div style={{ fontFamily: 'Poppins', fontSize: 72, fontWeight: 300, lineHeight: 1, marginBottom: 8, color: 'var(--text-primary)' }}>3</div>
+                <div style={{ fontFamily: 'Poppins', fontSize: 14, fontWeight: 400, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 20 }}>
+                  Work Management<br />
+                  <strong style={{ color: 'var(--text-primary)' }}>Gartner® Magic Quadrant™</strong><br />
+                  reports.
+                </div>
+                <a href="#" style={{ fontFamily: 'Poppins', fontSize: 13, fontWeight: 500, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'none', marginBottom: 32 }}>
+                  Learn more <span>→</span>
+                </a>
+              </div>
+              <GartnerLogo />
+            </div>
+
+            {/* Card 3 — Forrester */}
+            <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: 16, padding: '32px 32px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minWidth: 240 }}>
+              <div>
+                <div style={{ fontFamily: 'Poppins', fontSize: 14, fontWeight: 400, color: 'var(--text-muted)', marginBottom: 8 }}>
+                  Motorola achieved
+                </div>
+                <div style={{ fontFamily: 'Poppins', fontSize: 72, fontWeight: 300, lineHeight: 1, marginBottom: 8, color: 'var(--text-primary)' }}>346%</div>
+                <div style={{ fontFamily: 'Poppins', fontSize: 14, fontWeight: 400, color: 'var(--text-muted)', lineHeight: 1.5, marginBottom: 20 }}>
+                  <strong style={{ color: 'var(--text-primary)' }}>ROI</strong> according to{' '}
+                  <strong style={{ color: 'var(--text-primary)' }}>Forrester's<br />Total Economic Impact™</strong><br />
+                  research.
+                </div>
+                <a href="#" style={{ fontFamily: 'Poppins', fontSize: 13, fontWeight: 500, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 6, textDecoration: 'none', marginBottom: 32 }}>
+                  Learn more <span>→</span>
+                </a>
+              </div>
+              <ForresterLogo />
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Pre-dark bleed */}
+      <div className="pre-dark-bleed" />
 
       {/* [11] Final CTA */}
       <section style={{ background: 'var(--dark)', padding: '140px clamp(32px, 5vw, 64px)', position: 'relative', overflow: 'hidden' }}>
