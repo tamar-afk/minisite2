@@ -1007,7 +1007,6 @@ export default function App() {
         <motion.div style={{ display: 'flex', alignItems: 'center', gap: 12 }}
           initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.fast, delay: 0 }}
         >
-          <span style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 11, letterSpacing: '0.06em', color: 'var(--text-xmuted)' }}>[01 / 12]</span>
           <span style={{ width: 5, height: 5, borderRadius: 2, background: 'var(--primary)' }} />
           <span style={{ fontFamily: 'Poppins', fontWeight: 800, fontSize: 20, color: 'var(--text-primary)' }}>monday</span>
         </motion.div>
@@ -1034,9 +1033,8 @@ export default function App() {
           const r = e.currentTarget.getBoundingClientRect()
           setMouse({ x: e.clientX - r.left, y: e.clientY - r.top })
         }}
-        style={{ position: 'relative', background: 'white', padding: '120px 24px 80px', overflow: 'hidden' }}
+        style={{ position: 'relative', background: 'white', padding: '120px clamp(32px, 5vw, 64px) 80px', overflow: 'hidden' }}
       >
-        <div style={{ position: 'absolute', top: 24, left: 24, zIndex: 1 }}><SectionLabel n={2} /></div>
         <div style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
           <div style={{
             position: 'absolute', width: 500, height: 500, borderRadius: '50%',
@@ -1086,9 +1084,8 @@ export default function App() {
       </motion.section>
 
       {/* [03] Demo */}
-      <section style={{ background: 'var(--light-bg)', padding: '80px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <SectionLabel n={3} />
+      <section style={{ background: 'var(--light-bg)', padding: '80px clamp(32px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <div style={{ borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden', boxShadow: '0 16px 56px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04)', background: 'white' }}>
             <div style={{ height: 44, background: '#F5F5F7', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 16px', gap: 8 }}>
               <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57' }} />
@@ -1149,29 +1146,33 @@ export default function App() {
         </div>
       </section>
 
-      {/* [04] Platform Statement */}
-      <section style={{ background: 'white', padding: '88px 24px', maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+      {/* [08] Platform Statement — 4 pillars */}
+      <section style={{ background: 'white', padding: '88px clamp(32px, 5vw, 64px)', maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
         <p style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 'clamp(24px, 2.8vw, 34px)', color: 'var(--text-primary)', lineHeight: 1.55, margin: 0, letterSpacing: '-0.01em' }}>
           monday work management is the complete system for AI-powered work execution. Where humans lead — and agents execute.
         </p>
-        <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 12, color: 'var(--text-xmuted)', marginTop: 14, letterSpacing: '0.02em', opacity: 0.9 }}>platform · agents · workflows</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginTop: 28 }}>
-          {['Specialized agents', 'Human orchestration', 'Workflow builder', 'Complete work platform', 'One shared brain'].map((pill) => (
-            <span key={pill} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 100, padding: '8px 18px', backgroundColor: 'var(--near-white)' }}>{pill}</span>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', alignItems: 'center', marginTop: 28 }}>
+          {['Specialized agents', 'Human orchestration', 'Complete work platform', 'One shared brain'].map((pill) => (
+            <motion.span
+              key={pill}
+              whileHover={{ scale: 1.02, borderColor: 'rgba(108,71,255,0.25)', color: 'var(--text-primary)', boxShadow: '0 2px 12px rgba(108,71,255,0.08)' }}
+              transition={{ duration: 0.2 }}
+              style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 13, color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 100, padding: '10px 18px', backgroundColor: 'white', boxShadow: '0 1px 4px rgba(0,0,0,0.04)', whiteSpace: 'nowrap' }}
+            >{pill}</motion.span>
           ))}
         </div>
       </section>
 
       {/* [05] Purpose-Built Agents — full-width immersive, no columns */}
       <section style={{ background: 'var(--light-bg)', paddingBottom: 80 }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 40px 40px' }}>
-          <SectionLabel n={5} />
+        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '80px clamp(32px, 5vw, 64px) 40px' }}>
+          <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>1 / 4</div>
           <Eyebrow>Specialized Agents</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontSize: 'clamp(30px, 3.8vw, 48px)', fontWeight: 600, margin: 0, color: 'var(--text-primary)', lineHeight: 1.2, letterSpacing: '-0.02em' }}>Built for every team.</h2>
           <p style={{ fontFamily: 'Poppins', fontSize: 'clamp(20px, 2.5vw, 28px)', fontWeight: 400, color: 'var(--text-muted)', margin: '8px 0 0', lineHeight: 1.4 }}>Purpose-built for the work they actually do.</p>
         </div>
-        <div style={{ position: 'sticky', top: 64, zIndex: 10, background: 'rgba(255,255,255,0.98)', borderBottom: '1px solid var(--border)', padding: '0 40px', backdropFilter: 'saturate(1.1) blur(12px)' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 0 }}>
+        <div style={{ position: 'sticky', top: 64, zIndex: 10, background: 'rgba(255,255,255,0.98)', borderBottom: '1px solid var(--border)', padding: '0 clamp(32px, 5vw, 64px)', backdropFilter: 'saturate(1.1) blur(12px)' }}>
+          <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', gap: 0 }}>
             {['PMO', 'Legal', 'HR', 'Product', 'Marketing', 'IT', 'Operations'].map((tab, i) => (
               <motion.button
                 key={tab}
@@ -1193,7 +1194,7 @@ export default function App() {
             animate={{ opacity: 1, filter: 'blur(0px)' }}
             exit={{ opacity: 0, filter: 'blur(4px)' }}
             transition={{ duration: 0.3 }}
-            style={{ position: 'relative', width: '100%', height: '70vh', minHeight: 500, overflow: 'hidden', background: 'white' }}
+            style={{ position: 'relative', width: '100%', maxWidth: 800, margin: '0 auto', height: '70vh', minHeight: 500, overflow: 'hidden', background: 'white', borderRadius: 16, boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}
           >
             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: 'clamp(80px, 14vw, 180px)', fontWeight: 600, color: 'var(--text-primary)', opacity: 0.035, whiteSpace: 'nowrap', pointerEvents: 'none', userSelect: 'none', zIndex: 0, fontFamily: 'Poppins' }}>
               {['PMO', 'Legal', 'HR', 'Product', 'Marketing', 'IT', 'Operations'][agentsTab]}
@@ -1215,7 +1216,7 @@ export default function App() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              style={{ position: 'absolute', bottom: 32, left: 32, zIndex: 10, background: 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid var(--border)', borderRadius: 16, padding: '24px 28px', maxWidth: 340, boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}
+              style={{ position: 'absolute', bottom: 32, left: 32, zIndex: 10, background: 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid var(--border)', borderRadius: 16, padding: '28px 32px', maxWidth: 300, boxShadow: '0 8px 32px rgba(0,0,0,0.08)' }}
             >
               <div style={{ fontFamily: 'Poppins', fontSize: 20, fontWeight: 600, marginBottom: 8, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>{DEPT_DATA[agentsTab].name}</div>
               <div style={{ fontFamily: 'Poppins', fontSize: 14, fontWeight: 400, color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: 16 }}>{DEPT_DATA[agentsTab].description}</div>
@@ -1231,36 +1232,30 @@ export default function App() {
       </section>
 
       {/* [06] Every Step of Work — left: all steps visible; right: surface mockup */}
-      <section style={{ background: 'white', padding: '80px 0 48px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}><SectionLabel n={6} /></div>
+      <section style={{ background: 'white', padding: '48px clamp(32px, 5vw, 64px) 40px' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>2 / 4</div>
           <Eyebrow>complete work platform</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>Every step of work, in one place.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: 0 }}>From the first goal to the final report.</p>
         </div>
-        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 24px', display: 'flex', minHeight: '100vh', background: 'white', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(32px, 5vw, 64px)', display: 'flex', background: 'white', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {/* Left panel — steps list, compact */}
-          <div style={{ width: 260, flexShrink: 0, padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: 0, overflowY: 'auto', maxHeight: '100vh' }}>
+          <div style={{ width: 300, flexShrink: 0, padding: '16px 14px', display: 'flex', flexDirection: 'column', gap: 0, overflowY: 'auto' }}>
             {STEPS_DATA.map((step, i) => (
               <motion.div
                 key={i}
                 onClick={() => setStepIndex(i)}
-                animate={{ opacity: stepIndex === i ? 1 : 0.35 }}
-                whileHover={{ opacity: 0.8 }}
+                animate={{ opacity: stepIndex === i ? 1 : 0.5 }}
+                whileHover={{ opacity: 0.9 }}
                 transition={{ duration: 0.2 }}
-                style={{ padding: '10px 0', paddingLeft: 10, borderBottom: '1px solid var(--border)', cursor: 'pointer', borderLeft: stepIndex === i ? '3px solid var(--primary)' : '3px solid transparent' }}
+                style={{ padding: '12px 0', paddingLeft: 10, borderBottom: '1px solid var(--border)', cursor: 'pointer', borderLeft: stepIndex === i ? '3px solid var(--primary)' : '3px solid transparent' }}
               >
                 <div style={{ fontSize: 9, fontWeight: 600, letterSpacing: '0.06em', color: stepIndex === i ? 'var(--primary)' : 'var(--text-xmuted)', marginBottom: 2, textTransform: 'uppercase', fontFamily: 'Poppins' }}>
                   {String(i + 1).padStart(2, '0')} / 05
                 </div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 2, fontFamily: 'Poppins', letterSpacing: '-0.01em' }}>{step.title}</div>
-                <motion.div
-                  animate={{ height: stepIndex === i ? 'auto' : 0, opacity: stepIndex === i ? 1 : 0 }}
-                  transition={{ duration: 0.25 }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4, fontFamily: 'Poppins', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{step.desc}</div>
-                </motion.div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4, fontFamily: 'Poppins', letterSpacing: '-0.01em' }}>{step.title}</div>
+                <div style={{ fontSize: 11, color: stepIndex === i ? 'var(--text-muted)' : 'var(--text-xmuted)', lineHeight: 1.45, fontFamily: 'Poppins' }}>{step.desc}</div>
               </motion.div>
             ))}
           </div>
@@ -1272,7 +1267,7 @@ export default function App() {
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               exit={{ opacity: 0, filter: 'blur(4px)' }}
               transition={{ duration: 0.35 }}
-              style={{ flex: 1, height: '100vh', overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border)', position: 'relative' }}
+              style={{ flex: 1, minHeight: 520, overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border)', position: 'relative' }}
             >
               {[
                 <GoalDecompositionSurface key="s1" />,
@@ -1287,9 +1282,9 @@ export default function App() {
       </section>
 
       {/* [07] The Knowledge Layer — one shared brain */}
-      <section style={{ background: 'var(--light-bg)', padding: '100px 24px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <SectionLabel n={7} />
+      <section style={{ background: 'var(--light-bg)', padding: '100px clamp(32px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>3 / 4</div>
           <Eyebrow>ONE SHARED BRAIN</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>The context that makes it all possible.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', marginBottom: 8 }}>One unified layer powering every person and every agent.</p>
@@ -1301,10 +1296,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* [08] Human orchestration — delicate */}
-      <section style={{ background: 'var(--near-white)', padding: '88px 24px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 20 }}><SectionLabel n={8} /></div>
+      {/* Human orchestration — delicate */}
+      <section style={{ background: 'var(--near-white)', padding: '88px clamp(32px, 5vw, 64px)' }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>4 / 4</div>
           <Eyebrow>HUMAN ORCHESTRATION</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 'clamp(24px, 2.6vw, 36px)', color: 'var(--text-primary)', margin: '0 0 6px', lineHeight: 1.28, letterSpacing: '-0.01em' }}>You set the guardrails.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 15, color: 'var(--text-muted)', margin: 0 }}>Tell agents what to do — and keep them in their lane.</p>
@@ -1393,13 +1388,12 @@ export default function App() {
       </section>
 
       {/* [09] Why monday — differentiators (proof that backs the story) */}
-      <section style={{ background: 'white', padding: '88px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <SectionLabel n={9} />
+      <section style={{ background: 'white', padding: '88px clamp(32px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 920, margin: '0 auto' }}>
           <Eyebrow>WHY MONDAY</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', marginBottom: 8, lineHeight: 1.25, letterSpacing: '-0.015em' }}>Why monday work management.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 16, color: 'var(--text-muted)', marginBottom: 40, maxWidth: 560 }}>Trusted by teams everywhere — here’s what makes the difference.</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
             {WHY_ROWS.map((row, i) => (
               <motion.div
                 key={row.num}
@@ -1411,10 +1405,10 @@ export default function App() {
                 style={{
                   border: '1px solid var(--border)',
                   borderRadius: 16,
-                  padding: '26px 22px',
+                  padding: '20px 18px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 14,
+                  gap: 10,
                   transition: 'border-color 0.25s ease, background-color 0.25s ease',
                   boxShadow: '0 2px 12px rgba(0,0,0,0.03)',
                 }}
@@ -1442,9 +1436,8 @@ export default function App() {
       <div className="pre-dark-bleed" />
 
       {/* [10] Proof — the outcome that backs the story */}
-      <section style={{ background: 'var(--dark)', padding: '100px 24px' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 40 }}>[10 / 12]</div>
+      <section style={{ background: 'var(--dark)', padding: '100px clamp(32px, 5vw, 64px)' }}>
+        <div style={{ maxWidth: 820, margin: '0 auto' }}>
           <div ref={proof50Ref} style={{ textAlign: 'center' }}>
             <div style={{ fontFamily: 'Poppins', fontWeight: 700, fontSize: 'clamp(80px, 12vw, 112px)', color: 'white', lineHeight: 1, letterSpacing: '-0.03em' }}>{count50}%</div>
             <div style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'rgba(255,255,255,0.45)', marginTop: 8 }}>faster project delivery</div>
@@ -1466,8 +1459,7 @@ export default function App() {
       </section>
 
       {/* [11] Final CTA */}
-      <section style={{ background: 'var(--dark)', padding: '140px 24px', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: 24, left: 24, zIndex: 1, fontFamily: 'Poppins', fontWeight: 600, fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)' }}>[11 / 12]</div>
+      <section style={{ background: 'var(--dark)', padding: '140px clamp(32px, 5vw, 64px)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
           {(() => {
             const particles = Array.from({ length: 36 }, (_, i) => ({
@@ -1494,9 +1486,8 @@ export default function App() {
       </section>
 
       {/* [12] Footer */}
-      <footer style={{ background: 'var(--dark)', borderTop: '1px solid var(--dark-border)', padding: '44px 24px 28px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', fontFamily: 'Poppins', fontWeight: 600, fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 24 }}>[12 / 12]</div>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 32, marginBottom: 32 }}>
+      <footer style={{ background: 'var(--dark)', borderTop: '1px solid var(--dark-border)', padding: '44px clamp(32px, 5vw, 64px) 28px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 32, marginBottom: 32 }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
               <span style={{ width: 5, height: 5, borderRadius: 2, background: 'var(--primary)' }} />
@@ -1519,7 +1510,7 @@ export default function App() {
             <a href="#" style={{ color: 'rgba(255,255,255,0.4)' }}><Youtube size={18} /></a>
           </div>
         </div>
-        <div style={{ borderTop: '1px solid var(--dark-border)', paddingTop: 24, fontFamily: 'Poppins', fontWeight: 400, fontSize: 12, color: 'rgba(255,255,255,0.28)', textAlign: 'center' }}>© 2025 monday.com · Privacy · Terms · Security</div>
+        <div style={{ maxWidth: 1000, margin: '0 auto', borderTop: '1px solid var(--dark-border)', paddingTop: 24, fontFamily: 'Poppins', fontWeight: 400, fontSize: 12, color: 'rgba(255,255,255,0.28)', textAlign: 'center' }}>© 2025 monday.com · Privacy · Terms · Security</div>
       </footer>
     </>
   )
