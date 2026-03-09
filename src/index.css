@@ -90,6 +90,20 @@ body {
   border-radius: 6px;
 }
 
+/* Hero split: stack on mobile */
+.hero-split {
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .hero-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
 /* Knowledge layer SVG dash flow */
 @keyframes dashFlow {
   to { stroke-dashoffset: -40; }

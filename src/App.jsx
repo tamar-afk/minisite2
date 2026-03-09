@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion'
 import { Linkedin, Twitter, Youtube } from 'lucide-react'
 
@@ -330,7 +330,7 @@ const DEPT_DATA = [
   { name: 'Operations', description: 'Orchestrate cross-functional workflows with smart automations, approvals, and dashboards that reflect reality.', actions: ['Triggers cross-team workflows from one event', 'Tracks dependencies across departments', 'Escalates blockers before they compound'] },
 ]
 
-function MondayBoardMockup({ department = 'Marketing', statusDoneCount }) {
+function MondayBoardMockup({ department = 'Marketing', statusDoneCount, compact = false }) {
   const boardData = BOARD_DATA[department] || BOARD_DATA['Marketing']
   let flatIndex = 0
   const getStatus = (item) => {
@@ -341,57 +341,65 @@ function MondayBoardMockup({ department = 'Marketing', statusDoneCount }) {
     flatIndex++
     return item.status
   }
+  const pad = compact ? '6px 14px' : '12px 24px'
+  const padSm = compact ? '4px 12px' : '8px 24px'
+  const titleFs = compact ? 14 : 18
+  const tabFs = compact ? 11 : 13
+  const rowFs = compact ? 11 : 13
+  const gridCols = compact ? '24px 1fr 80px 100px 72px' : '32px 1fr 120px 160px 100px'
+  const avatarSz = compact ? 20 : 26
+  const checkboxSz = compact ? 10 : 14
 
   return (
     <div style={{ display: 'flex', width: '100%', height: '100%', fontFamily: 'Poppins' }}>
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'white' }}>
-        <div style={{ borderBottom: '1px solid #E6E9EF', padding: '12px 24px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ fontSize: 18, fontWeight: 700 }}>{boardData.name}</div>
-          <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #E6E9EF', marginBottom: -13 }}>
+        <div style={{ borderBottom: '1px solid #E6E9EF', padding: pad, display: 'flex', flexDirection: 'column', gap: compact ? 4 : 8 }}>
+          <div style={{ fontSize: titleFs, fontWeight: 700 }}>{boardData.name}</div>
+          <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #E6E9EF', marginBottom: compact ? -9 : -13 }}>
             {['Main Table', 'Kanban', 'Gantt', 'Calendar'].map((view, i) => (
-              <div key={view} style={{ padding: '6px 16px', fontSize: 13, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? 'var(--primary)' : '#676879', borderBottom: i === 0 ? '2px solid var(--primary)' : '2px solid transparent', cursor: 'pointer' }}>{view}</div>
+              <div key={view} style={{ padding: compact ? '4px 12px' : '6px 16px', fontSize: tabFs, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? 'var(--primary)' : '#676879', borderBottom: i === 0 ? '2px solid var(--primary)' : '2px solid transparent', cursor: 'pointer' }}>{view}</div>
             ))}
           </div>
         </div>
-        <div style={{ padding: '8px 24px', borderBottom: '1px solid #E6E9EF', display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ background: 'var(--primary)', color: 'white', padding: '6px 14px', borderRadius: 6, fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>+ New item</div>
+        <div style={{ padding: compact ? '4px 14px' : '8px 24px', borderBottom: '1px solid #E6E9EF', display: 'flex', alignItems: 'center', gap: compact ? 8 : 12 }}>
+          <div style={{ background: 'var(--primary)', color: 'white', padding: compact ? '4px 10px' : '6px 14px', borderRadius: 6, fontSize: tabFs, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6 }}>+ New item</div>
           {['Search', 'Filter', 'Group by', 'Columns'].map(action => (
-            <div key={action} style={{ fontSize: 13, color: '#676879', cursor: 'pointer' }}>{action}</div>
+            <div key={action} style={{ fontSize: tabFs, color: '#676879', cursor: 'pointer' }}>{action}</div>
           ))}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '32px 1fr 120px 160px 100px', background: '#F5F6F8', borderBottom: '1px solid #E6E9EF', padding: '0 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: gridCols, background: '#F5F6F8', borderBottom: '1px solid #E6E9EF', padding: compact ? '0 14px' : '0 24px' }}>
           {['', 'Item', 'Owner', 'Status', 'Due Date'].map((col, i) => (
-            <div key={i} style={{ padding: '10px 8px', fontSize: 12, fontWeight: 500, color: '#676879', borderRight: i < 4 ? '1px solid #E6E9EF' : 'none' }}>{col}</div>
+            <div key={i} style={{ padding: compact ? '6px 6px' : '10px 8px', fontSize: compact ? 10 : 12, fontWeight: 500, color: '#676879', borderRight: i < 4 ? '1px solid #E6E9EF' : 'none' }}>{col}</div>
           ))}
         </div>
-        <div style={{ overflow: 'auto', flex: 1 }}>
+        <div style={{ overflow: compact ? 'hidden' : 'auto', flex: 1, minHeight: 0 }}>
           {boardData.groups.map((group, gi) => (
             <div key={gi}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 24px', background: '#F5F6F8', borderLeft: `4px solid ${group.color}`, borderBottom: '1px solid #E6E9EF' }}>
-                <span style={{ fontSize: 12 }}>▾</span>
-                <span style={{ fontSize: 13, fontWeight: 600 }}>{group.name}</span>
-                <span style={{ fontSize: 11, fontWeight: 500, color: '#676879', background: '#E6E9EF', padding: '1px 7px', borderRadius: 100 }}>{group.items.length}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: compact ? 6 : 8, padding: compact ? '4px 14px' : '8px 24px', background: '#F5F6F8', borderLeft: `4px solid ${group.color}`, borderBottom: '1px solid #E6E9EF' }}>
+                <span style={{ fontSize: compact ? 10 : 12 }}>▾</span>
+                <span style={{ fontSize: tabFs, fontWeight: 600 }}>{group.name}</span>
+                <span style={{ fontSize: compact ? 10 : 11, fontWeight: 500, color: '#676879', background: '#E6E9EF', padding: '1px 6px', borderRadius: 100 }}>{group.items.length}</span>
               </div>
               {group.items.map((item, ii) => {
                 const status = getStatus(item)
                 const bgColor = STATUS_COLORS[status] || STATUS_COLORS['Not started']
                 return (
-                  <div key={ii} style={{ display: 'grid', gridTemplateColumns: '32px 1fr 120px 160px 100px', borderLeft: `4px solid ${group.color}`, borderBottom: '1px solid #E6E9EF', background: ii % 2 === 0 ? 'white' : '#FAFBFF', padding: '0 24px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', borderRight: '1px solid #E6E9EF', padding: '0 8px' }}>
-                      <div style={{ width: 14, height: 14, border: '1.5px solid #C4C4C4', borderRadius: 3 }} />
+                  <div key={ii} style={{ display: 'grid', gridTemplateColumns: gridCols, borderLeft: `4px solid ${group.color}`, borderBottom: '1px solid #E6E9EF', background: ii % 2 === 0 ? 'white' : '#FAFBFF', padding: compact ? '0 14px' : '0 24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', borderRight: '1px solid #E6E9EF', padding: '0 6px' }}>
+                      <div style={{ width: checkboxSz, height: checkboxSz, border: '1.5px solid #C4C4C4', borderRadius: 2 }} />
                     </div>
-                    <div style={{ padding: '11px 8px', fontSize: 13, fontWeight: 400, borderRight: '1px solid #E6E9EF' }}>{item.name}</div>
+                    <div style={{ padding: compact ? '5px 6px' : '11px 8px', fontSize: rowFs, fontWeight: 400, borderRight: '1px solid #E6E9EF' }}>{item.name}</div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #E6E9EF' }}>
-                      <div style={{ width: 26, height: 26, borderRadius: '50%', background: item.ownerColor, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: 10, fontWeight: 700 }}>{item.owner}</div>
+                      <div style={{ width: avatarSz, height: avatarSz, borderRadius: '50%', background: item.ownerColor, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: compact ? 8 : 10, fontWeight: 700 }}>{item.owner}</div>
                     </div>
                     <div style={{ background: bgColor, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px solid #E6E9EF' }}>
-                      <span style={{ color: 'white', fontSize: 12, fontWeight: 600 }}>{status}</span>
+                      <span style={{ color: 'white', fontSize: compact ? 10 : 12, fontWeight: 600 }}>{status}</span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px', fontSize: 12, color: '#676879' }}>{item.date}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', padding: '0 6px', fontSize: compact ? 10 : 12, color: '#676879' }}>{item.date}</div>
                   </div>
                 )
               })}
-              <div style={{ padding: '8px 24px 8px 68px', fontSize: 13, color: '#676879', cursor: 'pointer', borderLeft: `4px solid ${group.color}`, borderBottom: '1px solid #E6E9EF' }}>+ Add item</div>
+              <div style={{ padding: compact ? '4px 14px 4px 48px' : '8px 24px 8px 68px', fontSize: rowFs, color: '#676879', cursor: 'pointer', borderLeft: `4px solid ${group.color}`, borderBottom: '1px solid #E6E9EF' }}>+ Add item</div>
             </div>
           ))}
         </div>
@@ -1022,11 +1030,120 @@ const WHY_ROWS = [
   { num: '04', title: 'Deep understanding of your business', body: 'Unifies data, work context, and institutional knowledge into a single intelligence layer for people and agents.', proof: 'integrations' },
 ]
 
-export default function App() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+const DEMO_PROMPT_TEXT = 'Plan Q3 product launch campaign'
+const DEMO_FRAME_DURATIONS_BASE = [800, 2000, 1000, 2000, 2000, 2000, 2000, 1200]
+/* Hero: longer on each beat so the story reads (prompt → type → think → board → agent → done) */
+const HERO_FRAME_DURATIONS = [1000, 2600, 1700, 2800, 2600, 2600, 1500, 1200]
+const MARKETING_BOARD_ITEMS = 8
+
+function HeroDemoSequence({ cycleDurationMs = 13000, minHeight = 520, useHeroPacing = false, compact = false }) {
   const [demoFrame, setDemoFrame] = useState(0)
   const [demoTyped, setDemoTyped] = useState('')
   const [demoStatusDoneCount, setDemoStatusDoneCount] = useState(0)
+  const frameDurations = useMemo(
+    () => useHeroPacing ? HERO_FRAME_DURATIONS : DEMO_FRAME_DURATIONS_BASE.map((d) => Math.round(d * (cycleDurationMs / 13000))),
+    [cycleDurationMs, useHeroPacing]
+  )
+  const totalCycle = useMemo(() => frameDurations.reduce((a, b) => a + b, 0), [frameDurations])
+
+  useEffect(() => {
+    const start = Date.now()
+    const cycle = useHeroPacing ? totalCycle : cycleDurationMs
+    const id = setInterval(() => {
+      const elapsed = (Date.now() - start) % cycle
+      if (elapsed < 100) {
+        setDemoFrame(0)
+        setDemoTyped('')
+        return
+      }
+      let acc = 0
+      for (let i = 0; i < frameDurations.length; i++) {
+        if (elapsed < acc + frameDurations[i]) {
+          setDemoFrame(i)
+          break
+        }
+        acc += frameDurations[i]
+      }
+    }, 100)
+    return () => clearInterval(id)
+  }, [cycleDurationMs, frameDurations, useHeroPacing, totalCycle])
+
+  useEffect(() => {
+    if (demoFrame === 0) { setDemoTyped(''); setDemoStatusDoneCount(0) }
+    if (demoFrame === 1 && demoTyped.length < DEMO_PROMPT_TEXT.length) {
+      const t = setTimeout(() => setDemoTyped((s) => DEMO_PROMPT_TEXT.slice(0, s.length + 1)), 75)
+      return () => clearTimeout(t)
+    }
+  }, [demoFrame, demoTyped])
+
+  useEffect(() => {
+    if (demoFrame !== 5) return
+    setDemoStatusDoneCount(0)
+    let n = 0
+    const id = setInterval(() => {
+      n++
+      setDemoStatusDoneCount((c) => (c < MARKETING_BOARD_ITEMS ? c + 1 : c))
+      if (n >= MARKETING_BOARD_ITEMS) clearInterval(id)
+    }, 180)
+    return () => clearInterval(id)
+  }, [demoFrame])
+
+  return (
+    <div style={{ position: 'relative', minHeight, background: demoFrame >= 3 ? 'var(--light-bg)' : 'white' }}>
+      <AnimatePresence mode="wait">
+        {demoFrame === 0 && (
+          <motion.div key="f0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #fafafa 0%, #f5f5f7 100%)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'white', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+              <span style={{ fontFamily: 'Poppins', fontSize: 14, color: 'var(--text-muted)' }}>Describe what you want to build...</span>
+              <motion.span style={{ width: 2, height: 16, background: 'var(--primary)' }} {...cursorBlink} />
+            </div>
+          </motion.div>
+        )}
+        {demoFrame === 1 && (
+          <motion.div key="f1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'linear-gradient(180deg, #fafafa 0%, #f5f5f7 100%)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'white', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
+              <span style={{ fontFamily: 'Poppins', fontSize: 14, color: 'var(--text-primary)' }}>{demoTyped}</span>
+              <motion.span style={{ width: 2, height: 16, background: 'var(--primary)' }} {...cursorBlink} />
+            </div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} style={{ display: 'flex', gap: 8, marginTop: 24 }}>
+              {[1, 2, 3].map((i) => <div key={i} className="skeleton" style={{ width: 120, height: 24 }} />)}
+            </motion.div>
+          </motion.div>
+        )}
+        {demoFrame === 2 && (
+          <motion.div key="f2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--light-bg)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <span style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 14, color: 'var(--text-muted)' }}>Thinking</span>
+              <motion.span animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 0.6, repeat: Infinity }}>...</motion.span>
+            </div>
+          </motion.div>
+        )}
+        {demoFrame >= 3 && (
+          <motion.div key="f3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+            <MondayBoardMockup
+              department="Marketing"
+              statusDoneCount={demoFrame >= 5 ? (demoFrame === 5 ? demoStatusDoneCount : MARKETING_BOARD_ITEMS) : undefined}
+              compact={compact}
+            />
+            {demoFrame === 4 && (
+              <motion.div
+                {...agentPop}
+                style={{
+                  position: 'absolute', top: compact ? 160 : 230, left: compact ? 200 : 280, background: 'var(--primary)', color: 'white', fontSize: compact ? 10 : 11, fontWeight: 600, padding: compact ? '3px 10px' : '4px 12px', borderRadius: 100, boxShadow: '0 2px 12px rgba(108,71,255,0.5)', zIndex: 20, whiteSpace: 'nowrap', fontFamily: 'Poppins',
+                }}
+              >
+                ⚡ Brief Writer · Drafting...
+              </motion.div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+export default function App() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
   const [agentsTab, setAgentsTab] = useState(0)
   const [stepIndex, setStepIndex] = useState(0)
   const [guardrailsPillar, setGuardrailsPillar] = useState(0)
@@ -1049,51 +1166,6 @@ export default function App() {
   const navBlur = useTransform(scrollY, [0, 80], [0, 16])
   const navEdge = useTransform(scrollY, [0, 80], ['rgba(0,0,0,0)', 'rgba(0,0,0,0.08)'])
   const heroY = useTransform(useScroll().scrollY, [0, 400], [0, -60])
-
-  // Demo sequence loop: 13s cycle, frames 0..6 then restart
-  const promptText = 'Plan Q3 product launch campaign'
-  const frameDurations = [800, 2000, 1000, 2000, 2000, 2000, 2000, 1200]
-  const demoStartRef = useRef(Date.now())
-  useEffect(() => {
-    const id = setInterval(() => {
-      const elapsed = (Date.now() - demoStartRef.current) % 13000
-      if (elapsed < 100) {
-        setDemoFrame(0)
-        setDemoTyped('')
-        return
-      }
-      let acc = 0
-      for (let i = 0; i < frameDurations.length; i++) {
-        if (elapsed < acc + frameDurations[i]) {
-          setDemoFrame(i)
-          break
-        }
-        acc += frameDurations[i]
-      }
-    }, 100)
-    return () => clearInterval(id)
-  }, [])
-  useEffect(() => {
-    if (demoFrame === 0) { setDemoTyped(''); setDemoStatusDoneCount(0) }
-    if (demoFrame === 1 && demoTyped.length < promptText.length) {
-      const t = setTimeout(() => setDemoTyped((s) => promptText.slice(0, s.length + 1)), 75)
-      return () => clearTimeout(t)
-    }
-  }, [demoFrame, demoTyped])
-  // Frame 5: animate status cells to Done left-to-right, 180ms stagger (Marketing board has 8 items)
-  const MARKETING_BOARD_ITEMS = 8
-  useEffect(() => {
-    if (demoFrame !== 5) return
-    setDemoStatusDoneCount(0)
-    let n = 0
-    const id = setInterval(() => {
-      n++
-      setDemoStatusDoneCount((c) => (c < MARKETING_BOARD_ITEMS ? c + 1 : c))
-      if (n >= MARKETING_BOARD_ITEMS) clearInterval(id)
-    }, 180)
-    return () => clearInterval(id)
-  }, [demoFrame])
-
 
   return (
     <>
@@ -1135,14 +1207,14 @@ export default function App() {
         </motion.div>
       </motion.nav>
 
-      {/* [02] Hero */}
+      {/* [02] Hero — split: text left, demo right */}
       <motion.section
         ref={heroRef}
         onMouseMove={(e) => {
           const r = e.currentTarget.getBoundingClientRect()
           setMouse({ x: e.clientX - r.left, y: e.clientY - r.top })
         }}
-        style={{ position: 'relative', background: 'white', padding: '120px clamp(32px, 5vw, 64px) 80px', overflow: 'hidden' }}
+        style={{ position: 'relative', background: 'white', padding: '100px 0 80px', overflow: 'hidden' }}
       >
         <div style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
           <div style={{
@@ -1152,47 +1224,53 @@ export default function App() {
             transition: 'transform 0.12s ease',
           }} />
         </div>
-        <motion.div style={{ y: heroY, maxWidth: 820, margin: '0 auto', textAlign: 'center', position: 'relative' }}>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.5, y: 0 }} transition={{ delay: 0.7, duration: 0.6, ease: EASE.out }}
-            style={{ fontFamily: 'Poppins', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(38px, 4.5vw, 58px)', color: 'var(--text-muted)', margin: 0, lineHeight: 1.2, letterSpacing: '-0.01em' }}
-          >This is where work used to be managed.</motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
-            style={{
-              fontFamily: 'Poppins',
-              fontWeight: 600,
-              fontSize: 'clamp(48px, 6.5vw, 88px)',
-              color: 'var(--text-primary)',
-              margin: '16px 0 0',
-              lineHeight: 1.08,
-              letterSpacing: '-0.025em',
-            }}
-          >Now it's where it gets done.</motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9, duration: 0.5 }}
-            style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 18, color: 'var(--text-muted)', maxWidth: 480, margin: '24px auto 0', lineHeight: 1.7 }}
-          >You set the direction. Agents execute across every team, every workflow, every use case.</motion.p>
+        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 40px' }}>
+          <motion.div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', y: heroY }}>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.5, y: 0 }} transition={{ delay: 0.7, duration: 0.6, ease: EASE.out }}
+              style={{ fontFamily: 'Poppins', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(38px, 4.5vw, 58px)', color: 'var(--text-muted)', margin: 0, lineHeight: 1.2, letterSpacing: '-0.01em', textAlign: 'center' }}
+            >This is where work used to be managed.</motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
+              style={{
+                fontFamily: 'Poppins',
+                fontWeight: 600,
+                fontSize: 'clamp(48px, 6.5vw, 88px)',
+                color: 'var(--text-primary)',
+                margin: '16px 0 0',
+                lineHeight: 1.08,
+                letterSpacing: '-0.025em',
+                textAlign: 'center',
+              }}
+            >Now it's where it gets done.</motion.h1>
 
-          <motion.div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginTop: 40 }}>
-            <motion.button {...primaryBtn} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 15, color: 'white', background: 'var(--primary)', border: 'none', borderRadius: 12, padding: '14px 28px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(108,71,255,0.25)' }}>Get started free</motion.button>
-            <motion.button {...ghostBtn} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.35 }} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 15, color: 'var(--text-primary)', background: 'transparent', border: '1px solid var(--border)', borderRadius: 12, padding: '14px 28px', cursor: 'pointer' }}>See it in action →</motion.button>
+            <motion.p
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9, duration: 0.5 }}
+              style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 18, color: 'var(--text-muted)', maxWidth: 480, margin: '24px 0 0', lineHeight: 1.7, textAlign: 'center' }}
+            >You set the direction. Agents execute across every team, every workflow, every use case.</motion.p>
+
+            <motion.div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center', marginTop: 40 }}>
+              <motion.button {...primaryBtn} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 15, color: 'white', background: 'var(--primary)', border: 'none', borderRadius: 12, padding: '14px 28px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(108,71,255,0.25)' }}>Get started free</motion.button>
+              <motion.button {...ghostBtn} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.35 }} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 15, color: 'var(--text-primary)', background: 'transparent', border: '1px solid var(--border)', borderRadius: 12, padding: '14px 28px', cursor: 'pointer' }}>See it in action →</motion.button>
+            </motion.div>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 12, color: 'var(--text-xmuted)', marginTop: 14, opacity: 0.9, textAlign: 'center' }}>No credit card required</motion.p>
+
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 13, color: 'var(--text-muted)', marginTop: 56, opacity: 0.85, textAlign: 'center' }}>Already trusted by 250K+ customers worldwide</motion.p>
           </motion.div>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.4 }} style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 12, color: 'var(--text-xmuted)', marginTop: 14, opacity: 0.9 }}>No credit card required</motion.p>
+        </div>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 13, color: 'var(--text-muted)', marginTop: 56, opacity: 0.85 }}>Already trusted by 250K+ customers worldwide</motion.p>
-          <div className="marquee-outer" style={{ marginTop: 24 }}>
-            <div className="marquee-track">
-              {[...MARQUEE_LOGOS, ...MARQUEE_LOGOS].map((name, i) => (
-                <span key={i} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: 'var(--text-muted)', opacity: 0.45, minWidth: 110, textAlign: 'center' }}>{name}</span>
-              ))}
-            </div>
+        {/* Logo marquee — full width below */}
+        <div className="marquee-outer" style={{ marginTop: 64 }}>
+          <div className="marquee-track">
+            {[...MARQUEE_LOGOS, ...MARQUEE_LOGOS].map((name, i) => (
+              <span key={i} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 14, color: 'var(--text-muted)', opacity: 0.45, minWidth: 110, textAlign: 'center' }}>{name}</span>
+            ))}
           </div>
-        </motion.div>
+        </div>
       </motion.section>
 
-      {/* [03] Demo */}
+      {/* [03] Demo — full size, 13s cycle */}
       <section style={{ background: 'var(--light-bg)', padding: '80px clamp(32px, 5vw, 64px)' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <div style={{ borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden', boxShadow: '0 16px 56px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04)', background: 'white' }}>
@@ -1202,55 +1280,7 @@ export default function App() {
               <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
               <div style={{ margin: '0 auto', background: 'white', borderRadius: 6, padding: '4px 20px', fontSize: 12, color: 'var(--text-muted)', border: '1px solid var(--border)' }}>app.monday.com</div>
             </div>
-            <div style={{ position: 'relative', minHeight: 520, background: demoFrame >= 3 ? 'var(--light-bg)' : 'white' }}>
-              <AnimatePresence mode="wait">
-                {demoFrame === 0 && (
-                  <motion.div key="f0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #fafafa 0%, #f5f5f7 100%)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'white', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                      <span style={{ fontFamily: 'Poppins', fontSize: 14, color: 'var(--text-muted)' }}>Describe what you want to build...</span>
-                      <motion.span style={{ width: 2, height: 16, background: 'var(--primary)' }} {...cursorBlink} />
-                    </div>
-                  </motion.div>
-                )}
-                {demoFrame === 1 && (
-                  <motion.div key="f1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, background: 'linear-gradient(180deg, #fafafa 0%, #f5f5f7 100%)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'white', borderRadius: 12, border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}>
-                      <span style={{ fontFamily: 'Poppins', fontSize: 14, color: 'var(--text-primary)' }}>{demoTyped}</span>
-                      <motion.span style={{ width: 2, height: 16, background: 'var(--primary)' }} {...cursorBlink} />
-                    </div>
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} style={{ display: 'flex', gap: 8, marginTop: 24 }}>
-                      {[1, 2, 3].map((i) => <div key={i} className="skeleton" style={{ width: 120, height: 24 }} />)}
-                    </motion.div>
-                  </motion.div>
-                )}
-                {demoFrame === 2 && (
-                  <motion.div key="f2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--light-bg)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <span style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 14, color: 'var(--text-muted)' }}>Thinking</span>
-                      <motion.span animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 0.6, repeat: Infinity }}>...</motion.span>
-                    </div>
-                  </motion.div>
-                )}
-                {demoFrame >= 3 && (
-                  <motion.div key="f3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-                    <MondayBoardMockup
-                      department="Marketing"
-                      statusDoneCount={demoFrame >= 5 ? (demoFrame === 5 ? demoStatusDoneCount : MARKETING_BOARD_ITEMS) : undefined}
-                    />
-                    {demoFrame === 4 && (
-                      <motion.div
-                        {...agentPop}
-                        style={{
-                          position: 'absolute', top: 230, left: 280, background: 'var(--primary)', color: 'white', fontSize: 11, fontWeight: 600, padding: '4px 12px', borderRadius: 100, boxShadow: '0 2px 12px rgba(108,71,255,0.5)', zIndex: 20, whiteSpace: 'nowrap', fontFamily: 'Poppins',
-                        }}
-                      >
-                        ⚡ Brief Writer · Drafting...
-                      </motion.div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <HeroDemoSequence cycleDurationMs={13000} minHeight={520} />
           </div>
         </div>
       </section>
