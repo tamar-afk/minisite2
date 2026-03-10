@@ -330,6 +330,56 @@ const DEPT_DATA = [
   { name: 'Operations', description: 'Orchestrate cross-functional workflows with smart automations, approvals, and dashboards that reflect reality.', actions: ['Triggers cross-team workflows from one event', 'Tracks dependencies across departments', 'Escalates blockers before they compound'] },
 ]
 
+function PlatformPills() {
+  const [hovered, setHovered] = useState(null)
+
+  const pills = [
+    { short: 'Agents',   full: 'Specialized for every department and use case' },
+    { short: 'People',   full: 'Lead, control, and do the work that matters' },
+    { short: 'Platform', full: 'One place for your teams and agents to work together' },
+    { short: 'Context',  full: 'One shared brain built on everything your organization knows' },
+  ]
+
+  return (
+    <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginTop: 40, fontFamily: 'Poppins' }}>
+      {pills.map((pill, i) => {
+        const isHovered = hovered === i
+        return (
+          <div
+            key={i}
+            onMouseEnter={() => setHovered(i)}
+            onMouseLeave={() => setHovered(null)}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              padding: '8px 18px',
+              borderRadius: 100,
+              border: `1px solid ${isHovered ? '#6C47FF' : 'rgba(0,0,0,0.14)'}`,
+              background: isHovered ? '#6C47FF' : 'white',
+              cursor: 'default',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              maxWidth: isHovered ? 600 : 120,
+              transition: 'max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease, border-color 0.2s ease',
+            }}
+          >
+            <span style={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: isHovered ? 'white' : '#6B6B8A',
+              transition: 'color 0.2s ease',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            }}>
+              {isHovered ? pill.full : pill.short}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 function MondayBoardMockup({ department = 'Marketing', statusDoneCount, compact = false }) {
   const boardData = BOARD_DATA[department] || BOARD_DATA['Marketing']
   let flatIndex = 0
@@ -1288,25 +1338,16 @@ export default function App() {
       {/* [08] Platform Statement — 4 pillars */}
       <section style={{ background: 'white', padding: '88px clamp(16px, 3vw, 40px)', maxWidth: 960, margin: '0 auto', textAlign: 'center' }}>
         <p style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 'clamp(24px, 2.8vw, 34px)', color: 'var(--text-primary)', lineHeight: 1.55, margin: 0, letterSpacing: '-0.01em' }}>
-          monday work management is the complete system for AI-powered work execution. Where humans lead — and agents execute.
+          Where teams and agents get work done together, projects and processes run smoothly, and you see exactly where things stand.
         </p>
-        <div style={{ display: 'flex', flexWrap: 'nowrap', gap: 8, justifyContent: 'center', alignItems: 'center', marginTop: 28 }}>
-          {['Specialized agents', 'Human orchestration', 'Complete work platform', 'One shared brain'].map((pill) => (
-            <motion.span
-              key={pill}
-              whileHover={{ scale: 1.02, borderColor: 'rgba(108,71,255,0.25)', color: 'var(--text-primary)', boxShadow: '0 2px 12px rgba(108,71,255,0.08)' }}
-              transition={{ duration: 0.2 }}
-              style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 12, color: 'var(--text-muted)', border: '1px solid var(--border)', borderRadius: 100, padding: '8px 14px', backgroundColor: 'white', boxShadow: '0 1px 4px rgba(0,0,0,0.04)', whiteSpace: 'nowrap', flexShrink: 0 }}
-            >{pill}</motion.span>
-          ))}
-        </div>
+        <PlatformPills />
       </section>
 
       {/* [05] Purpose-Built Agents — full-width immersive, no columns */}
       <section style={{ background: 'var(--light-bg)', paddingBottom: 80 }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', padding: '80px clamp(32px, 5vw, 64px) 40px' }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>1 / 4</div>
-          <Eyebrow>Specialized Agents</Eyebrow>
+          <Eyebrow>Agents</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: 0, lineHeight: 1.25, letterSpacing: '-0.015em' }}>Built for every team.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: '8px 0 0', lineHeight: 1.4 }}>Purpose-built solutions and agents for every department and use case.</p>
         </div>
@@ -1374,9 +1415,9 @@ export default function App() {
       <section style={{ background: 'white', padding: '48px clamp(32px, 5vw, 64px) 40px' }}>
         <div style={{ textAlign: 'center', marginBottom: 40 }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>2 / 4</div>
-          <Eyebrow>complete work platform</Eyebrow>
-          <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>Every step of work, powered by AI.</h2>
-          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: 0 }}>From planning to execution to reporting, all in one place.</p>
+          <Eyebrow>Platform</Eyebrow>
+          <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>Every step of work, in one place.</h2>
+          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', margin: 0 }}>From intent to outcome, powered by AI.</p>
         </div>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(32px, 5vw, 64px)', display: 'flex', background: 'white', borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden' }}>
           {/* Left panel — steps list, compact */}
@@ -1424,14 +1465,13 @@ export default function App() {
       <section style={{ background: 'var(--light-bg)', padding: '100px clamp(32px, 5vw, 64px)' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>3 / 4</div>
-          <Eyebrow>ONE SHARED BRAIN</Eyebrow>
+          <Eyebrow>Context</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 8px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>The context that makes it all possible.</h2>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 17, color: 'var(--text-muted)', marginBottom: 8 }}>One unified layer powering every person and every agent.</p>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 12, color: 'var(--text-xmuted)', marginBottom: 40, letterSpacing: '0.02em' }}>data · context · knowledge</p>
           <div style={{ borderRadius: 20, overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.04)' }}>
             <KnowledgeFlow />
           </div>
-          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 13, color: 'var(--text-muted)', textAlign: 'center', marginTop: 24, opacity: 0.9 }}>Company Data · Active Work Context · Historical Knowledge</p>
         </div>
       </section>
 
@@ -1439,9 +1479,9 @@ export default function App() {
       <section style={{ background: 'var(--near-white)', padding: '88px clamp(32px, 5vw, 64px)' }}>
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
           <div style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 10, letterSpacing: '0.1em', color: 'var(--text-xmuted)', marginBottom: 20 }}>4 / 4</div>
-          <Eyebrow>HUMAN ORCHESTRATION</Eyebrow>
+          <Eyebrow>People</Eyebrow>
           <h2 style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(26px, 2.8vw, 40px)', color: 'var(--text-primary)', margin: '0 0 6px', lineHeight: 1.25, letterSpacing: '-0.015em' }}>You set the guardrails.</h2>
-          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 15, color: 'var(--text-muted)', margin: 0 }}>Tell agents what to do — and keep them in their lane.</p>
+          <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 15, color: 'var(--text-muted)', margin: 0 }}>Work alongside agents, set the direction and stay in control.</p>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginBottom: 36 }}>
           {[
