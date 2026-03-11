@@ -1275,7 +1275,7 @@ export default function App() {
           }} />
         </div>
 
-        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 40px' }}>
+        <div style={{ maxWidth: 960, margin: '0 auto', padding: '0 40px' }}>
           <motion.div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', y: heroY }}>
             <motion.p
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 0.5, y: 0 }} transition={{ delay: 0.7, duration: 0.6, ease: EASE.out }}
@@ -1293,7 +1293,7 @@ export default function App() {
                 letterSpacing: '-0.025em',
                 textAlign: 'center',
               }}
-            >Now it's where it gets done.</motion.h1>
+            >Now it's where it gets done for you.</motion.h1>
 
             <motion.p
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9, duration: 0.5 }}
@@ -1308,6 +1308,23 @@ export default function App() {
 
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.5 }} style={{ fontFamily: 'Poppins', fontWeight: 500, fontSize: 13, color: 'var(--text-muted)', marginTop: 56, opacity: 0.85, textAlign: 'center' }}>Already trusted by 250K+ customers worldwide</motion.p>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ marginTop: 48, width: '100%', maxWidth: 900, marginLeft: 'auto', marginRight: 'auto' }}
+          >
+            <div style={{ borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden', boxShadow: '0 16px 56px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04)', background: 'white' }}>
+              <div style={{ height: 44, background: '#F5F5F7', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 16px', gap: 8 }}>
+                <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57' }} />
+                <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FFBD2E' }} />
+                <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
+                <div style={{ margin: '0 auto', background: 'white', borderRadius: 6, padding: '4px 20px', fontSize: 12, color: 'var(--text-muted)', border: '1px solid var(--border)' }}>app.monday.com</div>
+              </div>
+              <HeroDemoSequence cycleDurationMs={15000} minHeight={400} useHeroPacing compact />
+            </div>
+          </motion.div>
         </div>
 
         {/* Logo marquee — full width below */}
@@ -1319,21 +1336,6 @@ export default function App() {
           </div>
         </div>
       </motion.section>
-
-      {/* [03] Demo — full size, 13s cycle */}
-      <section style={{ background: 'var(--light-bg)', padding: '80px clamp(32px, 5vw, 64px)' }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <div style={{ borderRadius: 20, border: '1px solid var(--border)', overflow: 'hidden', boxShadow: '0 16px 56px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04)', background: 'white' }}>
-            <div style={{ height: 44, background: '#F5F5F7', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', padding: '0 16px', gap: 8 }}>
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FF5F57' }} />
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#FFBD2E' }} />
-              <span style={{ width: 12, height: 12, borderRadius: '50%', background: '#28C840' }} />
-              <div style={{ margin: '0 auto', background: 'white', borderRadius: 6, padding: '4px 20px', fontSize: 12, color: 'var(--text-muted)', border: '1px solid var(--border)' }}>app.monday.com</div>
-            </div>
-            <HeroDemoSequence cycleDurationMs={13000} minHeight={520} />
-          </div>
-        </div>
-      </section>
 
       {/* [08] Platform Statement — 4 pillars */}
       <section style={{ background: 'white', padding: '88px clamp(16px, 3vw, 40px)', maxWidth: 960, margin: '0 auto', textAlign: 'center' }}>
@@ -1745,7 +1747,7 @@ export default function App() {
         </div>
         <div style={{ position: 'relative', maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 0.4 }} viewport={{ once: true }} style={{ fontFamily: 'Poppins', fontWeight: 400, fontStyle: 'italic', fontSize: 'clamp(32px, 3.6vw, 46px)', color: 'white', margin: 0, lineHeight: 1.25 }}>This is where work used to be managed.</motion.p>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.25 }} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(40px, 4.5vw, 56px)', color: 'white', margin: '14px 0 0', lineHeight: 1.2, letterSpacing: '-0.02em' }}>Now it's where it gets done.</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.25 }} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 'clamp(40px, 4.5vw, 56px)', color: 'white', margin: '14px 0 0', lineHeight: 1.2, letterSpacing: '-0.02em' }}>Now it's where it gets done for you.</motion.p>
           <p style={{ fontFamily: 'Poppins', fontWeight: 400, fontSize: 16, color: 'rgba(255,255,255,0.5)', marginTop: 22, lineHeight: 1.5 }}>Start today. Your teams lead. Agents do the rest.</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'center', marginTop: 44 }}>
             <motion.button {...primaryBtn} style={{ fontFamily: 'Poppins', fontWeight: 600, fontSize: 15, color: 'var(--text-primary)', background: 'white', border: 'none', borderRadius: 12, padding: '14px 30px', cursor: 'pointer', boxShadow: '0 4px 20px rgba(0,0,0,0.12)' }}>Get started free</motion.button>
